@@ -1,8 +1,8 @@
 import {
-  Entity,
-  PrimaryGeneratedColumn,
+  Column,
   CreateDateColumn,
-  Column
+  Entity,
+  PrimaryGeneratedColumn
 } from "typeorm";
 
 @Entity("idea")

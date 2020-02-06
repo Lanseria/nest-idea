@@ -2,6 +2,7 @@
   "recommendations": [
     "prisma.vscode-graphql",
     "dbaeumer.vscode-eslint",
-    "mikestead.dotenv"
+    "mikestead.dotenv",
+    "esbenp.prettier-vscode"
   ]
 }
