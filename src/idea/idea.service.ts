@@ -3,15 +3,20 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { IdeaDTO } from "./idea.dto";
 import { IdeaEntity } from "./idea.entity";
+import { UserEntity } from "src/user/user.entity";
 
 @Injectable()
 export class IdeaService {
   constructor(
-    @InjectRepository(IdeaEntity) private ideaRepository: Repository<IdeaEntity>
+    @InjectRepository(IdeaEntity)
+    private ideaRepository: Repository<IdeaEntity>,
+    @InjectRepository(UserEntity) private userRepository: Repository<UserEntity>
   ) {}
 
   async showAll() {
-    return await this.ideaRepository.find();
+    return await this.ideaRepository.find({
+      relations: ["author"]
+    });
   }
 
   async create(data: IdeaDTO) {
