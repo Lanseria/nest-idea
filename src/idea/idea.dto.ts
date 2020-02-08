@@ -15,4 +15,6 @@ export class IdeaResponse {
   idea: string;
   description: string;
   author?: UserResponse;
+  upvotes?: number;
+  downvotes?: number;
 }
