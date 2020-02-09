@@ -79,7 +79,7 @@ export class IdeaService {
 
   async showAll(): Promise<IdeaResponse[]> {
     const ideas = await this.ideaRepository.find({
-      relations: ["author", "upvotes", "downvotes"]
+      relations: ["author", "upvotes", "downvotes", "comments"]
     });
     return ideas.map(idea => this._toResponseObject(idea));
   }
@@ -99,7 +99,12 @@ export class IdeaService {
   }
 
   async read(id: string): Promise<IdeaResponse> {
-    const idea = await this._findById(id, ["author", "upvotes", "downvotes"]);
+    const idea = await this._findById(id, [
+      "author",
+      "upvotes",
+      "downvotes",
+      "comments"
+    ]);
     return this._toResponseObject(idea);
   }
 
