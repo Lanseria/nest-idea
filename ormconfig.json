@@ -6,6 +6,7 @@
   "password": "postgres",
   "database": "nest_idea",
   "synchronize": true,
+  "dropSchema": false,
   "logging": false,
   "entities": ["./dist/**/*.entity.js"]
 }

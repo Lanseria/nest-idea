@@ -5,6 +5,7 @@ import { IdeaDTO, IdeaResponse } from "./idea.dto";
 import { IdeaEntity } from "./idea.entity";
 import { UserEntity } from "src/user/user.entity";
 import { Votes } from "src/shared/votes.enum";
+import { Page } from "src/shared/page.dto";
 
 @Injectable()
 export class IdeaService {
@@ -77,11 +78,22 @@ export class IdeaService {
     return this._toResponseObject(idea);
   }
 
-  async showAll(): Promise<IdeaResponse[]> {
-    const ideas = await this.ideaRepository.find({
-      relations: ["author", "upvotes", "downvotes", "comments"]
+  async showAll(
+    current: number = 1,
+    size: number = 10
+  ): Promise<Page<IdeaResponse>> {
+    const [ideas, counts] = await this.ideaRepository.findAndCount({
+      relations: ["author", "upvotes", "downvotes", "comments"],
+      take: size,
+      skip: size * (current - 1)
     });
-    return ideas.map(idea => this._toResponseObject(idea));
+    const ideasPage = new Page(
+      size,
+      current,
+      counts,
+      ideas.map(idea => this._toResponseObject(idea))
+    );
+    return ideasPage;
   }
 
   async create(userId: string, data: IdeaDTO): Promise<IdeaResponse> {

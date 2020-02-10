@@ -2,20 +2,35 @@ import { Injectable, HttpException, HttpStatus } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { UserEntity } from "./user.entity";
-import { UserDTO } from "./user.dto";
+import { UserDTO, UserResponse } from "./user.dto";
+import { Page } from "src/shared/page.dto";
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(UserEntity) private userRepository: Repository<UserEntity>
   ) {}
-  async showAll() {
-    const users = await this.userRepository.find({
-      relations: ["ideas", "bookmarks"]
+  async showAll(
+    current: number = 1,
+    size: number = 10
+  ): Promise<Page<UserResponse>> {
+    const [users, counts] = await this.userRepository.findAndCount({
+      relations: ["ideas", "bookmarks"],
+      take: size,
+      skip: size * (current - 1),
+      order: {
+        created: "DESC"
+      }
     });
-    return users.map(user => user.toResponseObject(false));
+    const usersPage = new Page(
+      size,
+      current,
+      counts,
+      users.map(user => user.toResponseObject(false))
+    );
+    return usersPage;
   }
-  async login(data: UserDTO) {
+  async login(data: UserDTO): Promise<UserResponse> {
     const { username, password } = data;
     const user = await this.userRepository.findOne({ where: { username } });
     if (!user || !(await user.comparePassword(password))) {
@@ -26,7 +41,7 @@ export class UserService {
     }
     return user.toResponseObject();
   }
-  async register(data: UserDTO) {
+  async register(data: UserDTO): Promise<UserResponse> {
     const { username } = data;
     let user = await this.userRepository.findOne({ where: { username } });
     if (user) {
