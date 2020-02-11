@@ -9,7 +9,7 @@ export class UserController {
 
   @Get()
   showAllUsers(@Query("current") current: number, @Query("size") size: number) {
-    return this.userService.showAll(current, size);
+    return this.userService.showListByPage(current, size);
   }
 
   @Post("login")

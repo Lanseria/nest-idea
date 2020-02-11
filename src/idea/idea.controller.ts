@@ -30,8 +30,8 @@ export class IdeaController {
   constructor(private ideaService: IdeaService) {}
 
   @Get()
-  showAllIdeas() {
-    return this.ideaService.showAll();
+  showAllIdeas(@Query("current") current: number, @Query("size") size: number) {
+    return this.ideaService.showListByPage(current, size);
   }
 
   @Post()

@@ -6,7 +6,8 @@ import {
   UseGuards,
   UsePipes,
   Body,
-  Delete
+  Delete,
+  Query
 } from "@nestjs/common";
 import { CommentService } from "./comment.service";
 import { AuthGuard } from "src/shared/auth.guard";
@@ -19,13 +20,19 @@ export class CommentController {
   constructor(private commentService: CommentService) {}
 
   @Get("idea/:id")
-  showCommentsByIdea(@Param("id") ideaId: string) {
-    return this.commentService.showByIdea(ideaId);
+  showCommentsByIdea(
+    @Param("id") ideaId: string,
+    @Query("current") current: number
+  ) {
+    return this.commentService.showByIdea(ideaId, current);
   }
 
   @Get("user/:id")
-  showCommentsByUser(@Param("id") userId: string) {
-    return this.commentService.showByUser(userId);
+  showCommentsByUser(
+    @Param("id") userId: string,
+    @Query("current") current: number
+  ) {
+    return this.commentService.showByUser(userId, current);
   }
 
   @Post("idea/:id")

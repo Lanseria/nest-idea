@@ -1,0 +1,21 @@
+type User {
+  id: ID!
+  username: String!
+  created: String!
+  bookmarks: [Idea!]
+  ideas: [Idea!]
+  comments: [Comment!]
+}
+
+type Query {
+  users(current: Int): [User!]
+}
+
+# export class UserResponse {
+#   id: string;
+#   username: string;
+#   created: Date;
+#   token?: string;
+#   ideas?: IdeaEntity[];
+#   bookmarks?: IdeaEntity[];
+# }

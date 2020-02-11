@@ -78,7 +78,22 @@ export class IdeaService {
     return this._toResponseObject(idea);
   }
 
-  async showAll(
+  async showList(
+    current: number = 1,
+    newest: boolean = false
+  ): Promise<IdeaResponse[]> {
+    const [ideas, counts] = await this.ideaRepository.findAndCount({
+      relations: ["author", "upvotes", "downvotes", "comments"],
+      take: 10,
+      skip: 10 * (current - 1),
+      order: {
+        created: newest ? "DESC" : "ASC"
+      }
+    });
+    return ideas.map(idea => this._toResponseObject(idea));
+  }
+
+  async showListByPage(
     current: number = 1,
     size: number = 10
   ): Promise<Page<IdeaResponse>> {

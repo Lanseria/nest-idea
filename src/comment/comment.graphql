@@ -1,0 +1,15 @@
+type Comment {
+  id: ID!
+  created: String!
+  comment: String!
+  # author: User
+  # idea: Idea
+}
+
+# export class CommentResponse {
+#   id: string;
+#   created: Date;
+#   comment: string;
+#   author: UserResponse;
+#   idea: IdeaEntity;
+# }
