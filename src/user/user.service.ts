@@ -11,6 +11,14 @@ export class UserService {
     @InjectRepository(UserEntity) private userRepository: Repository<UserEntity>
   ) {}
 
+  async read(username: string) {
+    const user = await this.userRepository.findOne({
+      where: { username },
+      relations: ["ideas", "bookmarks"]
+    });
+    return user.toResponseObject(false);
+  }
+
   async showList(current: number = 1): Promise<UserResponse[]> {
     const users = await this.userRepository.find({
       relations: ["ideas", "bookmarks"],

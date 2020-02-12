@@ -1,7 +1,6 @@
 {
   "recommendations": [
     "prisma.vscode-graphql",
-    "dbaeumer.vscode-eslint",
     "mikestead.dotenv",
     "esbenp.prettier-vscode",
     "eg2.vscode-npm-script",

@@ -7,8 +7,20 @@ type User {
   comments: [Comment!]
 }
 
+type Auth {
+  username: String!
+  token: String!
+}
+
 type Query {
   users(current: Int): [User!]
+  user(username: String!): User
+  mine: User
+}
+
+type Mutation {
+  login(username: String!, password: String!): Auth!
+  register(username: String!, password: String!): Auth!
 }
 
 # export class UserResponse {
