@@ -1,5 +1,5 @@
 type Idea {
-  id: ID!
+  id: ID
   updated: String!
   created: String!
   idea: String!
@@ -11,6 +11,17 @@ type Idea {
 }
 type Query {
   ideas(current: Int, newest: Boolean): [Idea!]
+  idea(id: ID!): Idea
+}
+
+type Mutation {
+  createIdea(idea: String!, description: String!): Idea!
+  updateIdea(id: ID!, idea: String, description: String): Idea!
+  deleteIdea(id: ID!): Idea
+  upvote(id: ID!): Idea!
+  downvote(id: ID!): Idea!
+  bookmark(id: ID!): User!
+  unbookmark(id: ID!): User!
 }
 
 # export class IdeaResponse {

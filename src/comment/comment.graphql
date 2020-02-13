@@ -1,9 +1,18 @@
 type Comment {
-  id: ID!
+  id: ID
   created: String!
   comment: String!
   # author: User
   # idea: Idea
+}
+
+type Query {
+  comment(id: ID!): Comment
+}
+
+type Mutation {
+  createComment(ideaId: ID!, comment: String!): Comment
+  deleteComment(id: ID!): Comment
 }
 
 # export class CommentResponse {

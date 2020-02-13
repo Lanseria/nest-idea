@@ -9,7 +9,7 @@ import {
 } from "@nestjs/graphql";
 import { UserService } from "./user.service";
 import { CommentService } from "src/comment/comment.service";
-import { UserDTO } from "./user.dto";
+import { UserDTO, UserResponse } from "./user.dto";
 import { UseGuards } from "@nestjs/common";
 import { AuthGuard } from "src/shared/auth.guard";
 
@@ -32,7 +32,7 @@ export class UserResolver {
 
   @Query()
   @UseGuards(AuthGuard)
-  mine(@Context("user") user: UserDTO) {
+  mine(@Context("user") user: UserResponse) {
     const { username } = user;
     return this.userService.read(username);
   }

@@ -61,7 +61,7 @@ export class CommentService {
   async showByIdea(ideaId: string, current: number = 1) {
     const comments = await this.commentRepository.find({
       where: {
-        author: { id: ideaId }
+        idea: { id: ideaId }
       },
       relations: ["author"],
       take: 10,
