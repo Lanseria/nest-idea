@@ -30,8 +30,13 @@ export class IdeaController {
   constructor(private ideaService: IdeaService) {}
 
   @Get()
-  showAllIdeas(@Query("current") current: number, @Query("size") size: number) {
-    return this.ideaService.showListByPage(current, size);
+  showAllIdeas(@Query("current") current: number) {
+    return this.ideaService.showList(current);
+  }
+
+  @Get("newest")
+  showNewestIdeas(@Query("current") current: number) {
+    return this.ideaService.showList(current, true);
   }
 
   @Post()
