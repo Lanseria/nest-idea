@@ -8,7 +8,6 @@ import {
   ManyToMany,
   JoinTable
 } from "typeorm";
-import { Logger } from "@nestjs/common";
 import * as bcrypt from "bcryptjs";
 import * as jwt from "jsonwebtoken";
 import { UserResponse } from "./user.dto";
@@ -64,13 +63,6 @@ export class UserEntity {
   }
 
   async comparePassword(password: string) {
-    // Logger.log(
-    //   `${JSON.stringify({
-    //     1: password,
-    //     2: this.password
-    //   })}`,
-    //   "UserEntity"
-    // );
     return await bcrypt.compare(password, this.password);
   }
 
